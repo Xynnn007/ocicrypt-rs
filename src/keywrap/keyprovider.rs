@@ -141,9 +141,10 @@ impl KeyProviderKeyWrapProtocolOutput {
         let mut req = crate::utils::ttrpc::keyprovider::KeyProviderKeyWrapProtocolInput::new();
         req.KeyProviderKeyWrapProtocolInput = input;
 
+        log::info!("called un_wrap_key api");
         let ttrpc_output = match operation {
             OpKey::Wrap => kc1
-                .wrap_key(ttrpc::context::with_timeout(20 * 1000 * 1000), &req)
+                .wrap_key(ttrpc::context::with_timeout(10 * 1000 * 1000 * 1000), &req)
                 .await
                 .map_err(|_| {
                     anyhow!(
@@ -153,7 +154,7 @@ impl KeyProviderKeyWrapProtocolOutput {
                 })?,
 
             OpKey::Unwrap => kc1
-                .un_wrap_key(ttrpc::context::with_timeout(20 * 1000 * 1000), &req)
+                .un_wrap_key(ttrpc::context::with_timeout(10 * 1000 * 1000 * 1000), &req)
                 .await
                 .map_err(|_| {
                     anyhow!(
